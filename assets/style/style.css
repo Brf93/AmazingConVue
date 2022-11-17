@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+#activo{
+    background-color: #d9036776 !important;
+}
+#activo:hover{
+    color: #000000 !important;
+}
+.activo h2{
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    padding: .5rem;
+}
+main{
+    min-height: 75vh!important;
+}
+.navHover:hover{
+    background-color: #d9036776 !important;
+}
+.carousel-control-prev {
+    background-color: white !important;
+}
+.carousel-control-next{
+    background-color: white !important;
+}
+.carousel-control-prev-icon{
+    color: #D90368 !important;
+}
+.carousel-control-next-icon{
+    color: #D90368!important;
+}
+button{
+    background-color: #D90368 !important;
+}
+footer p{
+    color: white;
+}
+.footerFullSize{
+    min-height: 10vh;
+}
+.carousel-item{
+    font-size: 28px;
+    padding: 10px;
+    transition-duration: .1s;
+
+}
+.numeros{
+    font-weight: 600;
+    color:  #D90368!important;
+}
+.descripcion{
+    font-weight: 400;
+}
+.fecha{
+    font-size: 13px;
+    font-weight: 600;
+}
+#exampleFormControlTextarea1{
+    resize: none;
+}
+#tablaEventos table
+{
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#tablaEventos{
+    padding-bottom: 5rem;
+    min-width: 95%;
+}
+.tablaDiv{
+    padding: 8px 0.5px;
+ }
+ td{
+    text-align: start;
+    font-size: 14px;
+    padding: 5px;
+    font-weight: 400;
+    width: 100%;
+    border: #000000;
+    border-style:dotted;
+    border-width: .2px;
+ }
+ tr{
+    width: 100%;
+    display: flex;
+ }
+ tr td {
+    text-align: start;
+ }
+ thead{
+    background-color: #d90367e0!important;
+    border-width: .2px;
+    border-color: #000000fb;
+    border-style: dotted;
+ }
+ tbody td:hover {
+     background-color: #d9036731;
+ }
+ th{
+     color: rgb(4, 0, 0);
+     padding: 6px;
+     font-weight: 600;
+ }
+ tbody tr{
+     background-color:#d9036723;
+ }
+ td span{
+    color: black;
+    font-weight: bold;
+    font-size: 13px;
+ }
+ .titulosTr{
+    background-color:#d903676f;
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-color: #000000;
+ }
+ 
+.alinearTarjetas{
+    display: flex;
+    justify-content: center;
+}
+#contenedorDetails{
+    max-width: 800px;
+    display: flex;
+}
+#contenedorDetails img{
+    min-width: 100%;
+    min-height: 100%;
+}
+#tarjetas img{
+    min-width: 100%;
+    min-height: 250px;
+    border-radius: 6px 6px 0px 0px;
+}
+.dolar{
+    font-weight: bold;
+}
+input[type="checkbox"]:checked{
+    background-color: #d90367!important;
+}
+label{
+    padding-right: 10px;
+}
+ul{
+    list-style-type:disc;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+li span {
+    font-weight: 400;
+}
+.minuscula{
+    text-transform: lowercase;
+    font-weight: 400;
+}
+@media screen and (max-width : 768px) {
+    .footerMobile{
+        display: flex !important;
+        justify-content: center !important;
+    }
+    #categoriasData{
+        flex-direction: column!important;
+        gap: .5rem;
+        padding: 20px;
+
+    }
+    #buscadorDesk{
+        flex-direction: column!important;
+        flex-wrap: wrap!important;
+    }
+}
