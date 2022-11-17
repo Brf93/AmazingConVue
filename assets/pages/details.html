@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/LogoPesataniapng.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/Logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/style.css">
     <title>AE | Details</title>
@@ -52,22 +52,23 @@
     <main> 
         <!-- Tarjeta lateral -->
         <div class="alinearTarjetas">
-          <div class="d-flex align-items-center justify-content-between" id="contenedorDetails">
-            <div class="row g-0">
+          <div class="d-flex align-items-center justify-content-between card mb-3" id="contenedorDetails">
+            <div class="row g-0 ">
                 <div class="col-md-4 ">
-                  <img :src="buscarId" class="img-fluid rounded-start d-placeholder-img" style="width: 400px ; height: 200px" alt="${buscarId.name}">
+                  <img :src="buscarId.image" class="img-fluid rounded-start d-placeholder-img" style="width: 400px ; height: 200px" :alt="buscarId.name">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
                     <h2 class="card-title">{{buscarId.name}}</h2>
-                    <div><span>${buscarId.category} ~ </span><span class = "fecha">${buscarId.date}</span></div>
+                    <div><span>{{buscarId.category}} ~ </span><span class = "fecha">{{buscarId.date}}</span></div>
                     <ul>
-                      <li><span>Place: <span class="numeros">${buscarId.place}</span></span></li>
-                      <li><span>Capacity: <span class="numeros">${buscarId.capacity}</span></span></li>
-                      <li><span>Assistance: <span class="numeros">${buscarId.assistance}</span></span></li>
+                      <li><span>Place: <span class="numeros">{{buscarId.place}}</span></span></li>
+                      <li><span>Capacity: <span class="numeros">{{buscarId.capacity}}</span></span></li>
+                      <li v-if = "buscarId.assistance != undefined"><span>Assistance: <span class="numeros">{{buscarId.assistance}}</span></span></li>
+                      <li v-if = "buscarId.assistance == undefined"><span>Estimate: <span class="numeros">{{buscarId.estimate}}</span></span></li>
                     </ul>
-                    <p class="card-text descripcion">${buscarId.description}</p>
-                    <p class="card-text"><small class="text-muted">Price: <span class = "dolar">$</span><span class = "numeros">${buscarId.price}</span></small></p>
+                    <p class="card-text descripcion">{{buscarId.description}}</p>
+                    <p class="card-text"><small class="text-muted">Price: <span class = "dolar">$</span><span class = "numeros">{{buscarId.price}}</span></small></p>
                   </div>
                 </div>
               </div>

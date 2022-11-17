@@ -4,10 +4,10 @@ const app = createApp({
     data(){
         return{
             eventos : [],
-            queryString : "",
-            params : "",
-            id : "",
-            buscarId : ""
+            queryString : undefined,
+            params : undefined,
+            id : undefined,
+            buscarId : undefined,
 
             }
     },
@@ -16,17 +16,20 @@ const app = createApp({
             .then(response => response.json())
             .then(data => {
               this.eventos = data.events
-              this.queryString = location.search 
-              this.params = new URLSearchParams(this.queryString)
-              this.id = this.params.get("id")
-              this.buscarId = this.eventos.find(eventos => (eventos._id == this.id))
+              this.buscarIdF()
+              
               
             })
 
             .catch(err => console.log(err))
             },
             methods: {
-              
+              buscarIdF(){
+                this.queryString = location.search 
+                this.params = new URLSearchParams(this.queryString)
+                this.id = this.params.get("id")
+                this.buscarId = this.eventos.find(eventos => (eventos._id == this.id))
+              }
 
                 }
 

@@ -6,6 +6,19 @@ const app = createApp({
             eventos : [],
             pasados : [] ,
             futuro : [],
+            nombreEventoAsist : [],
+            asistencia : [],
+            asistencia2 : [],
+            Porcentaje : [],
+            attendance : [],
+            categoOrdenada : [],
+            catego : [],
+            categoria : [],
+            ganancias : [],
+            capacidad : []
+
+
+
           
             }
     },
@@ -22,66 +35,69 @@ const app = createApp({
                 this.calcularMayorAudiencia(this.pasados)
                 this.listarTabla(this.futuro, this.tableUP)
                 this.listarTabla(this.pasados, this.tableLast)
+                console.log(this.Porcentaje)
+
             })
 
             .catch(err => console.log(err))
             },
             methods: {
                 
-            // calcularMayorAudiencia(array){
-            // let asistencia = []
-            // array.map(evento => asistencia.push(parseFloat(evento.assistance)))
-            // let mayoresAsist = Math.max(...asistencia)
-            // const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
-            //     return previousValue + currentValue;
-            // })
-            //     let nombreEventoAsist = this.eventos.find(elemento => ((elemento.assistance) == mayoresAsist))
-            //     let Porcentaje = ((mayoresAsist * 100) / (TodoSumado)).toFixed(2)
-            // },
-            // calcularMenorAudiencia(array){
-            //     let asistencia = []
-            //     array.map(evento => asistencia.push(parseFloat(evento.assistance)))
-            //     let minimo = Math.min(...asistencia)
+            calcularMayorAudiencia(array){
+            let asistencia = []
+            array.map(evento => asistencia.push(parseFloat(evento.assistance)))
+            let mayoresAsist = Math.max(...asistencia)
+            const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
+                return previousValue + currentValue;
+            })
+                this.nombreEventoAsist = this.eventos.find(elemento => ((elemento.assistance) == mayoresAsist))
+                console.log(this.nombreEventoAsist)
+                this.Porcentaje = ((mayoresAsist * 100) / (TodoSumado)).toFixed(2)
+            },
+            calcularMenorAudiencia(array){
+                let asistencia = []
+                array.map(evento => asistencia.push(parseFloat(evento.assistance)))
+                let minimo = Math.min(...asistencia)
                 
-            //     const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
-            //         return previousValue + currentValue;
-            //     })
-            //     let nombreEventoAsist = this.eventos.find(elemento => ((elemento.assistance) == minimo))
-            //     let Porcentaje = ((minimo * 100) / ( TodoSumado )).toFixed(2)
-            //     },
+                const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
+                    return previousValue + currentValue;
+                })
+                this.nombreEventoAsist = this.eventos.find(elemento => ((elemento.assistance) == minimo))
+                this.Porcentaje = ((minimo * 100) / ( TodoSumado )).toFixed(2)
+                },
 
-            // mayorCapacidad(array){
-            //     let capacidad = []
-            //     array.map(evento => capacidad.push(parseFloat(evento.capacity)))
-            //     let mayor = Math.max(...capacidad)
-            //     let nombreEventoAsist = this.eventos.find(elemento => ((elemento.capacity) == mayor))
-            //     },
-            // listarTabla(array, ubicacion){
-            //     catego = []
-            //     array.forEach(item => !catego.includes(item.category)? catego.push(item.category) : "")
-            //     let categoOrdenada = catego.sort()
-            // },
-            // revenues(array, valor){
-            //     categoria = array.filter(eventos => eventos.category === valor)
-            //     ganancias = categoria.map(categoria => categoria.price * categoria.estimate? categoria.price * categoria.estimate : categoria.price * categoria.assistance)
-            //     totalGanancias = ganancias.reduce(function (previousValue, currentValue){
-            //         return previousValue + currentValue;
-            //     })
-            //     return numberFormat2.format(totalGanancias)
-            // },
-            // attendancePorcentaje(array, valor){
-            //     asistencia = array.filter(eventos => eventos.category === valor)
-            //     asistencia2 = asistencia.map(eventos => parseFloat(eventos.estimate? eventos.estimate : eventos.assistance))
-            //     capacidad = asistencia.map(eventos => parseFloat(eventos.capacity))
-            //     const capacidadSumado = capacidad.reduce(function (previousValue, currentValue) {
-            //         return previousValue + currentValue;
-            //     })
-            //     const todoSumado = asistencia2.reduce(function (previousValue, currentValue) {
-            //         return previousValue + currentValue;
-            //     })
-            //     let Porcentaje = ((todoSumado * 100) / capacidadSumado).toFixed(3)
-            //     return Porcentaje
-            // }
+            mayorCapacidad(array){
+                let capacidad = []
+                array.map(evento => capacidad.push(parseFloat(evento.capacity)))
+                let mayor = Math.max(...capacidad)
+                this.nombreEventoAsist = this.eventos.find(elemento => ((elemento.capacity) == mayor))
+                },
+            listarTabla(array, ubicacion){
+                array.forEach(item => !this.catego.includes(item.category)? this.catego.push(item.category) : "") //NO FUNCIONA INCLUDES
+                this.categoOrdenada = this.catego.sort()
+            },
+            revenues(array, valor){
+                this.categoria = array.filter(eventos => eventos.category === valor)
+                this.ganancias = this.categoria.map(categoria => this.categoria.price * this.categoria.estimate? this.categoria.price * this.categoria.estimate : this.categoria.price * this.categoria.assistance)
+                let totalGanancias = this.ganancias.reduce(function (previousValue, currentValue){
+                    return previousValue + currentValue;
+                })
+                return numberFormat2.format(totalGanancias)
+            },
+            attendancePorcentaje(array, valor){
+                this.asistencia = array.filter(eventos => eventos.category === valor)
+                this.asistencia2 = this.asistencia.map(eventos => parseFloat(eventos.estimate? eventos.estimate : eventos.assistance))
+                this.capacidad = this.asistencia.map(eventos => parseFloat(eventos.capacity))
+                const capacidadSumado = capacidad.reduce(function (previousValue, currentValue) {
+                    return previousValue + currentValue;
+                })
+                const todoSumado = this.asistencia2.reduce(function (previousValue, currentValue) {
+                    return previousValue + currentValue;
+                })
+                this.Porcentaje = ((todoSumado * 100) / capacidadSumado).toFixed(3)
+                console.log(this.Porcentaje)
+                return Porcentaje
+            }
                 },
 
 
