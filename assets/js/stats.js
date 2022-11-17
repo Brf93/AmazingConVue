@@ -16,10 +16,6 @@ const app = createApp({
             categoria : [],
             ganancias : [],
             capacidad : []
-
-
-
-          
             }
     },
     created(){
@@ -33,8 +29,8 @@ const app = createApp({
                 this.mayorCapacidad(this.eventos)
                 this.calcularMenorAudiencia(this.pasados)
                 this.calcularMayorAudiencia(this.pasados)
-                this.listarTabla(this.futuro, this.tableUP)
-                this.listarTabla(this.pasados, this.tableLast)
+                // this.listarTabla(this.futuro, this.tableUP)
+                // this.listarTabla(this.pasados, this.tableLast)
                 console.log(this.Porcentaje)
 
             })
@@ -72,10 +68,10 @@ const app = createApp({
                 let mayor = Math.max(...capacidad)
                 this.nombreEventoAsist = this.eventos.find(elemento => ((elemento.capacity) == mayor))
                 },
-            listarTabla(array, ubicacion){
-                array.forEach(item => !this.catego.includes(item.category)? this.catego.push(item.category) : "") //NO FUNCIONA INCLUDES
-                this.categoOrdenada = this.catego.sort()
-            },
+            // listarTabla(array, ubicacion){
+            //     array.forEach(item => !this.catego.includes(item.category)? this.catego.push(item.category) : "") //NO FUNCIONA INCLUDES
+            //     this.categoOrdenada = this.catego.sort()
+            // },
             revenues(array, valor){
                 this.categoria = array.filter(eventos => eventos.category === valor)
                 this.ganancias = this.categoria.map(categoria => this.categoria.price * this.categoria.estimate? this.categoria.price * this.categoria.estimate : this.categoria.price * this.categoria.assistance)
