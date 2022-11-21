@@ -66,9 +66,9 @@
                   </tr>
                 <tbody>
                   <tr>
-                    <td id="mayorPrimero"><span>{{nombreEventoAsist.name}}</span>: had an attendance of {{Porcentaje}} %</td>
-                    <td id="menorPrimero"><span>{{nombreEventoAsistMenor.name}}</span>: had an attendance of {{PorcentajeMenor}} %</td>
-                    <td id="capacidadPrimero"><span>{{nombreEventoAsist.name}}</span>: with a capacity of {{nombreEventoAsist.capacity}} people</td>
+                    <td id="mayorPrimero"><span>{{calcularPorcentajeMayor.name}}</span>: had an attendance of {{calcularPorcentajeMayor.porcentaje}} %</td>
+                    <td id="menorPrimero"><span>{{calcularPorcentajeMenor.name}}</span>: had an attendance of {{calcularPorcentajeMenor.porcentaje}} %</td>
+                    <td id="capacidadPrimero"><span>{{capacidadMayor.name}}</span>: with a capacity of {{capacidadMayor.capacity}} people</td>
                   </tr>
               </tbody>
                 <thead>
@@ -80,10 +80,10 @@
                     <td><span>Revenues</span></td>
                     <td><span>Percentage of attendance</span></td>
                   </tr>
-                  <tr>
-                    <td>{{}}</td>
-                    <td class="text-start">{{revenues}}</td>
-                    <td class="text-start">{{revenues}}%</td>
+                  <tr v-for = "eventos of objetosComingTabla">
+                    <td>{{eventos.category}}</td>
+                    <td class="text-start">{{eventos.revenues}}</td>
+                    <td class="text-start">{{}}%</td>
                   </tr>
                 </tbody>
                     <thead>
@@ -95,10 +95,10 @@
                     <td><span>Revenues</span></td>
                     <td><span>Percentage of attendance</span></td>
                   </tr>
-                  <tr v-for = "evento of filtrado">
-                    <td>{{evento}}</td>
-                    <td class="text-start">{{attendance}}</td>
-                    <td class="text-start">{{attendance}}%</td>
+                  <tr v-for = "eventos of objetosPastTabla ">
+                    <td>{{eventos.category}}</td>
+                    <td class="text-start">{{eventos.revenues}}</td>
+                    <td class="text-start">{{}}%</td>
                   </tr>
               </tbody>
               <tfoot></tfoot>

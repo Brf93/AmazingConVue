@@ -4,103 +4,111 @@ const app = createApp({
     data(){
         return{
             eventos : [],
-            pasados : [] ,
-            futuro : [],
-            nombreEventoAsist : [],
-            nombreEventoAsistMenor : [],
-            nombreCapacidad : [],
-            PorcentajeMenor : [],
-            asistencia : [],
-            asistencia2 : [],
-            Porcentaje : [],
-            attendance : [],
-            categoOrdenada : [],
-            catego : [],
-            categoria : [],
-            ganancias : [],
-            capacidad : [],
-            filtrado : [],
-            categoriaFiltrada : []
+            nuevoArrayEventos : [],
+            currentDate : [],
+            fecha : '',
+            eventosComing : [],
+            eventosPast : [],
+            categoriasUpComing : [],
+            categoriasSinRepetir : [],
+            objetosComingTabla : [],
+            objetosPastTabla : [],
+            calcularPorcentajeMayor : [],
+            calcularPorcentajeMenor : [],
+            capacidadMayor : []
+            
             }
     },
     created(){
         fetch('https://amazing-events.herokuapp.com/api/events')
             .then(response => response.json())
             .then(data => {
+                this.currentDate = data.currentDate
                 this.eventos = data.events
-                this.pasados =  data.events.filter((element) => (element.date < data.currentDate))
-                this.futuro = data.events.filter((element) => (element.date > data.currentDate))
-                this.filtrado = this.eventos.forEach(evento => !this.categoriaFiltrada.includes(evento.category)? this.categoriaFiltrada.push(evento.category): "")
-                this.mayorCapacidad(this.eventos)
-                this.calcularMayorAudiencia(this.pasados)
-                this.calcularMenorAudiencia(this.pasados)
-                // this.listarTabla(this.futuro, this.tableUP)
-                // this.listarTabla(this.pasados, this.tableLast)
-
+                this.fecha = data.currentDate
+                this.crearNuevoObjeto(this.eventos)
+                this.eventosComing = this.nuevoArrayEventos.filter(item => item.estimate)
+                this.eventosPast = this.nuevoArrayEventos.filter(item => item.assistance)
+                this.categoriasUpcoming = Array.from(new Set(this.eventosComing.filter(evento => evento.category).map(evento => evento.category)))
+                this.categoriasPast = Array.from(new Set(this.eventosPast.filter(evento => evento.category).map(evento => evento.category)))
+                this.objetoCategoriasUpcoming()
+                this.objetoCategoriasPast()
+                this.tablaPrincipio()
+                this.calcularPorcentajeMayor = this.nuevoArrayEventos.find(e => e.name == this.porcentajeMayorAsistencia)
+                this.calcularPorcentajeMenor = this.nuevoArrayEventos.find(e => e.name == this.porcentajeMenorAsistencia)
+                this.capacidadMayor = this.nuevoArrayEventos.find(e => e.name == this.mayorCapacidad)
+                console.log(this.calcularPorcentajeMayor)
             })
-
             .catch(err => console.log(err))
             },
             methods: {
-                
-            calcularMayorAudiencia(array){
-            let asistencia = []
-            array.map(evento => asistencia.push(parseFloat(evento.assistance)))
-            let mayoresAsist = Math.max(...asistencia)
-            const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
-                return previousValue + currentValue;
-            })
-                this.nombreEventoAsist = this.eventos.find(elemento => ((elemento.assistance) == mayoresAsist))
-                console.log(this.nombreEventoAsist)
-                this.Porcentaje = ((mayoresAsist * 100) / (TodoSumado)).toFixed(2)
-            },
-            calcularMenorAudiencia(array){
-                let asistencia = []
-                array.map(evento => asistencia.push(parseFloat(evento.assistance)))
-                let minimo = Math.min(...asistencia)
-                
-                const TodoSumado = asistencia.reduce(function (previousValue, currentValue) {
-                    return previousValue + currentValue;
-                })
-                this.nombreEventoAsistMenor = this.eventos.find(elemento => ((elemento.assistance) == minimo))
-                this.PorcentajeMenor = ((minimo * 100) / ( TodoSumado )).toFixed(2)
+                crearNuevoObjeto(array){
+                    
+                    this.nuevoArrayEventos = array.map(evento => {
+                        let aux
+                        if(evento.estimate){
+                            return aux = {
+                                category : evento.category,
+                                name : evento.name,
+                                date : evento.date,
+                                estimate : evento.estimate,
+                                price : evento.price,
+                                image : evento.image,
+                                description : evento.description,
+                                capacity : evento.capacity,
+                                _id : evento._id,
+                                place : evento.place,
+                                porcentaje : evento.estimate * 100 / evento.capacity,
+                                revenues : evento.estimate * evento.price
+                            }
+                        }else{
+                            return aux = {
+                                category : evento.category,
+                                name : evento.name,
+                                date : evento.date,
+                                assistance : evento.assistance,
+                                price : evento.price,
+                                image : evento.image,
+                                description : evento.description,
+                                capacity : evento.capacity,
+                                _id : evento._id,
+                                place : evento.place,
+                                porcentaje : evento.assistance * 100 / evento.capacity,
+                                revenues : evento.assistance * evento.price
+                            }
+                        }
+                    })
                 },
-
-            mayorCapacidad(array){
-                let capacidad = []
-                array.map(evento => capacidad.push(parseFloat(evento.capacity)))
-                let mayor = Math.max(...capacidad)
-                this.nombreCapacidad = this.eventos.find(elemento => ((elemento.capacity) == mayor))
+                objetoCategoriasUpcoming(){
+                    this.objetosComingTabla = this.categoriasUpcoming.map(event =>{
+                        let aux;
+                        return aux = {
+                            category : event,
+                            revenues : this.eventosComing.filter(e => e.category == event).map(element => element.revenues).reduce((actual, total) => actual += total, 0),
+                            estimate : this.eventosComing.filter(e=> e.estimate),
+                            capacity : this.eventosComing.filter(e => e.capacity),
+                            porcentaje : this.eventosComing.map(e => e.assistance * 100 / e.capacity)
+                        }
+                    })
+                    
                 },
-            // listarTabla(array, ubicacion){
-            //     array.forEach(item => !this.catego.includes(item.category)? this.catego.push(item.category) : "") //NO FUNCIONA INCLUDES
-            //     this.categoOrdenada = this.catego.sort()
-            // },
-            revenues(array, valor){
-                this.categoria = array.filter(eventos => eventos.category === valor)
-                this.ganancias = this.categoria.map(categoria => this.categoria.price * this.categoria.estimate? this.categoria.price * this.categoria.estimate : this.categoria.price * this.categoria.assistance)
-                let totalGanancias = this.ganancias.reduce(function (previousValue, currentValue){
-                    return previousValue + currentValue;
-                })
-                return numberFormat2.format(totalGanancias)
-            },
-            attendancePorcentaje(array, valor){
-                this.asistencia = array.filter(eventos => eventos.category === valor)
-                this.asistencia2 = this.asistencia.map(eventos => parseFloat(eventos.estimate? eventos.estimate : eventos.assistance))
-                this.capacidad = this.asistencia.map(eventos => parseFloat(eventos.capacity))
-                const capacidadSumado = capacidad.reduce(function (previousValue, currentValue) {
-                    return previousValue + currentValue;
-                })
-                const todoSumado = this.asistencia2.reduce(function (previousValue, currentValue) {
-                    return previousValue + currentValue;
-                })
-                this.Porcentaje = ((todoSumado * 100) / capacidadSumado).toFixed(3)
-                console.log(this.Porcentaje)
-                return Porcentaje
+                objetoCategoriasPast(){
+                    this.objetosPastTabla = this.categoriasPast.map(event =>{
+                        let aux;
+                        return aux = {
+                            category : event,
+                            revenues : this.eventosPast.filter(e => e.category == event).map(element => element.revenues).reduce((actual, total) => actual += total, 0),
+                            assistance : this.eventosPast.filter(e=> e.assistance),
+                            capacity : this.eventosPast.filter(e => e.capacity),
+                        }
+                    })
+                },
+                tablaPrincipio(){
+                    this.porcentajeMayorAsistencia = this.nuevoArrayEventos.filter(e => e.date < this.currentDate).filter(e => e.porcentaje).sort( (a,b) => b.porcentaje - a.porcentaje ).map(e => e.name).slice(0,1)
+                    this.porcentajeMenorAsistencia = this.nuevoArrayEventos.filter(e => e.date < this.currentDate).filter(e => e.porcentaje).sort( (a,b) => b.porcentaje - a.porcentaje ).map(e => e.name).slice(-1)
+                    this.mayorCapacidad = this.nuevoArrayEventos.filter(e => e.capacity).sort( (a,b) => b.capacity - a.capacity ).map(e => e.name).slice(0,1)
+                }
             }
-                },
-
-
-})
+    })
 
 app.mount('#app')

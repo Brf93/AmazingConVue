@@ -30,9 +30,9 @@ const app = createApp({
             this.categoriasFiltradas = [...new Set((this.eventosHome.filter(fn).map((fn))))]
                 },
 
-            buscarInput(){
-                this.categoriasInput = this.eventosHome.filter( evento => evento.name.toLowerCase().trim().includes(this.busquedaArea.toLowerCase().trim()))
-                }
+            // buscarInput(){
+            //     this.categoriasInput = this.eventosHome.filter( evento => evento.name.toLowerCase().trim().includes(this.busquedaArea.toLowerCase().trim()))
+            //     }
     },
     computed:{
         filtrar(){
