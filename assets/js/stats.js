@@ -37,7 +37,8 @@ const app = createApp({
                 this.calcularPorcentajeMayor = this.nuevoArrayEventos.find(e => e.name == this.porcentajeMayorAsistencia)
                 this.calcularPorcentajeMenor = this.nuevoArrayEventos.find(e => e.name == this.porcentajeMenorAsistencia)
                 this.capacidadMayor = this.nuevoArrayEventos.find(e => e.name == this.mayorCapacidad)
-                console.log(this.calcularPorcentajeMayor)
+                console.log(this.objetoEstimate)
+                console.log(this.objetosPastTabla)
             })
             .catch(err => console.log(err))
             },
@@ -81,32 +82,38 @@ const app = createApp({
                 },
                 objetoCategoriasUpcoming(){
                     this.objetosComingTabla = this.categoriasUpcoming.map(event =>{
+                        let objetoEstimate = this.eventosComing.map(e=> e.estimate).filter(element => element.estimate == event.estimate);
+                        let objetoCapacity = this.eventosComing.map(e=> e.capacity).filter(element => element.capacity == event.capacity);
                         let aux;
                         return aux = {
                             category : event,
                             revenues : this.eventosComing.filter(e => e.category == event).map(element => element.revenues).reduce((actual, total) => actual += total, 0),
-                            estimate : this.eventosComing.filter(e=> e.estimate),
-                            capacity : this.eventosComing.filter(e => e.capacity),
-                            porcentaje : this.eventosComing.map(e => e.assistance * 100 / e.capacity)
+                            estimate : this.eventosComing.filter(e=> e.category == event).map(e => parseInt(e.estimate)).reduce((a,b) => a += b),
+                            capacity : this.eventosComing.filter(e=> e.category == event).map(e => parseInt(e.capacity)).reduce((a,b) => a += b),
+                            // porcentaje :
                         }
                     })
-                    
                 },
                 objetoCategoriasPast(){
                     this.objetosPastTabla = this.categoriasPast.map(event =>{
+                        let objetoEstimate = this.eventosPast.map(e=> e.assistance).filter(element => element.assistance == event.estimate);
+                        let objetoCapacity = this.eventosPast.map(e=> e.capacity).filter(element => element.capacity == event.capacity);
                         let aux;
-                        return aux = {
+                        aux = {
                             category : event,
                             revenues : this.eventosPast.filter(e => e.category == event).map(element => element.revenues).reduce((actual, total) => actual += total, 0),
-                            assistance : this.eventosPast.filter(e=> e.assistance),
-                            capacity : this.eventosPast.filter(e => e.capacity),
+                            assistance : this.eventosPast.filter(e=> e.category == event).map(e => parseInt(e.assistance)).reduce((a,b) => a += b),
+                            capacity : this.eventosPast.filter(e=> e.category == event).map(e => parseInt(e.capacity)).reduce((a,b) => a += b),
+                            // porcentaje : ((assistance * 100) / capacity)
                         }
+                        console.log(aux.assistance)
+                        return aux;
                     })
                 },
                 tablaPrincipio(){
                     this.porcentajeMayorAsistencia = this.nuevoArrayEventos.filter(e => e.date < this.currentDate).filter(e => e.porcentaje).sort( (a,b) => b.porcentaje - a.porcentaje ).map(e => e.name).slice(0,1)
                     this.porcentajeMenorAsistencia = this.nuevoArrayEventos.filter(e => e.date < this.currentDate).filter(e => e.porcentaje).sort( (a,b) => b.porcentaje - a.porcentaje ).map(e => e.name).slice(-1)
-                    this.mayorCapacidad = this.nuevoArrayEventos.filter(e => e.capacity).sort( (a,b) => b.capacity - a.capacity ).map(e => e.name).slice(0,1)
+                    this.mayorCapacidad = this.eventosPast.filter(e => e.capacity).sort( (a,b) => b.capacity - a.capacity ).map(e => e.name).slice(0,1)
                 }
             }
     })

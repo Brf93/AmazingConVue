@@ -82,8 +82,8 @@
                   </tr>
                   <tr v-for = "eventos of objetosComingTabla">
                     <td>{{eventos.category}}</td>
-                    <td class="text-start">{{eventos.revenues}}</td>
-                    <td class="text-start">{{}}%</td>
+                    <td class="text-start">$ {{eventos.revenues}}</td>
+                    <td class="text-start">{{eventos.estimate * 100 / eventos.capacity}}%</td>
                   </tr>
                 </tbody>
                     <thead>
@@ -97,8 +97,8 @@
                   </tr>
                   <tr v-for = "eventos of objetosPastTabla ">
                     <td>{{eventos.category}}</td>
-                    <td class="text-start">{{eventos.revenues}}</td>
-                    <td class="text-start">{{}}%</td>
+                    <td class="text-start">$ {{eventos.revenues}}</td>
+                    <td class="text-start">{{eventos.assistance * 100 / eventos.capacity}}%</td>
                   </tr>
               </tbody>
               <tfoot></tfoot>
